@@ -1,0 +1,25 @@
+---
+layout: front
+permalink: /fa/
+lang: fa
+fronttitle: "<Q dir="RTL">OpenStreetMap یک نقشه جاده‌ای از دنیاست که توسط جامعه نقشه‌کش‌هایی که داپماْ در حال افزایش هستند ایجاد شده است.</q>"
+frontintro: "<Q dir="RTL">هرکسی می‌تواند OpenStreetMap را ویرایش کند. در اینجا یاد می‌گیرید چگونه LearnOSM راهنماهای قابل فهم و گام به گامی برای شروع به استفاده و مشارکت و کاربرد داده‌های OpenStreetMap را به شما اراپه می‌دهد. اگر به راه‌اندازی کارگاه آموزشی OpenStreetMap علاقمند هستید قسمت منابع آموزش‌دهندگان LearnOSM را مشاهده کنید</q>"
+ourguides: "<Q dir="RTL">راهنماهای ما</q>"
+searchtext: "<Q dir="RTL">نبال چه میگردید؟</q>د"
+begspan: "<Q dir="RTL">آیا در OpenStreetMap تازه‌کار هستید؟</q>د"
+beg: "<Q dir="RTL">راهنمای مبتدیان</q>"
+interspan: "<Q dir="RTL">نقشه‌کشی انساندوستانه</q>د"
+interspanlink: /fa/coordination/humanitarian
+inter: "<Q dir="RTL">اطلاعات نقشه‌کشی راه دور</q>د"
+advspan: "<Q dir="RTL">راهنمایی بیشتر</q>"
+adv: "<Q dir="RTL">راهنمای قالب اسناد</q>"
+advspanlink: "https://github.com/hotosm/learnosm/wiki/English-Learning-Guides/"
+faq: "<Q dir="RTL">سپوالات رایج</q>"
+faqA: "<Q dir="RTL">OpenStreetMap چیست؟</q>"
+faqB: "<Q dir="RTL">LearnOSM را چه کسی ایجاد کرده است؟</q>"
+faqC: "<Q dir="RTL">چگونه شروع به نقشه‌کشی کنیم؟</q>"
+faqD: "<Q dir="RTL">کجا راهنمایی و کمک بیشتری دریافت می‌کنم؟</q>"
+nosearch: true
+---
+
+HTML codes to be added
