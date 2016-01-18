@@ -6,7 +6,7 @@ permalink: /:categories/:title/
 columnist:
   paths:
   - _posts
-baseurl: 'http://learnosm-staging.github.io/learnosm-staging'
+baseurl: 'http://hotosm.github.io/learnosm-staging'
 rdiscount:
   extensions: [smart]
 prose:
