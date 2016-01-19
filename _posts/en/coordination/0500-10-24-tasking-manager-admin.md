@@ -22,7 +22,7 @@ The HOT or OSM Tasking Manager is frequently referred to as **TM2.**
 All access to TM2 is authorised through <https://www.openstreetmap.org>. You will need an OpenStreetMap (OSM) account. Once you have this account visit <http://tasks.hotosm.org/> and click **Login to OpenStreetMap**, which will refer you to the OSM page where you can authorise The Tasking Manager to have limited access to your OSM account.
 
 ###Access Levels within the OSM Tasking Manager
--  **User** - Able to login to TM2 and use its functionality to locate an area requiring mapping - fully described in [The OSM Tasking Manager guide within LearnOSM]({{site.baseurl}}/en/coordination/tasking-manager/). Some projects, such as those in the draft of archived state are not visible to users.  
+-  **User** - Able to login to TM2 and use its functionality to locate an area requiring mapping - fully described in [The OSM Tasking Manager guide within LearnOSM](/en/coordination/tasking-manager/). Some projects, such as those in the draft of archived state are not visible to users.  
 -  **Project Manager** - Create & Update Projects within TM2.  
 -  **Administrator** - Change access levels of users within TM2.
 
@@ -32,8 +32,8 @@ All access to TM2 is authorised through <https://www.openstreetmap.org>. You wil
 
 Click your username in the upper right corner, then **Create a New Project** & choose between;  
 
-- [Draw an area of interest to be mapped]({{site.baseurl}}/en/coordination/tasking-manager-admin/#draw-an-area-of-interest-to-be-mapped) or  
-- [Upload a GeoJSON or KML file of the area of interest to be mapped]({{site.baseurl}}/en/coordination/tasking-manager-admin/#upload-a-geojson-or-kml-file-of-the-area-of-interest-to-be-mapped)  
+- [Draw an area of interest to be mapped](/en/coordination/tasking-manager-admin/#draw-an-area-of-interest-to-be-mapped) or  
+- [Upload a GeoJSON or KML file of the area of interest to be mapped](/en/coordination/tasking-manager-admin/#upload-a-geojson-or-kml-file-of-the-area-of-interest-to-be-mapped)  
 
 ![TM Draw or Import][]
 ###Draw an area of interest to be mapped
@@ -163,7 +163,7 @@ Out of date wiki entry - for update when this guide complete  http://wiki.openst
 - end of hidden text-->
 
 
-[TM Tile Sizes]: {{site.baseurl}}/images/coordination/TM_tile_sizes.png
-[TM New]: {{site.baseurl}}/images/coordination/TM_create_new.png
-[TM Draw or Import]: {{site.baseurl}}/images/coordination/TM_draw_or_import.png
-[TM Draw]: {{site.baseurl}}/images/coordination/TM_draw.png
+[TM Tile Sizes]: /images/coordination/TM_tile_sizes.png
+[TM New]: /images/coordination/TM_create_new.png
+[TM Draw or Import]: /images/coordination/TM_draw_or_import.png
+[TM Draw]: /images/coordination/TM_draw.png
