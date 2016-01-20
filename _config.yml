@@ -6,12 +6,7 @@ permalink: /:categories/:title/
 columnist:
   paths:
   - _posts
-baseurl: 'http://hotosm.github.io/learnosm-staging'
-<!-- Main LearnOSM site & for Jekyll serve to run locally use
 baseurl: ''
-.
-For staging site use
-baseurl: 'http://hotosm.github.io/learnosm-staging' -->
 rdiscount:
   extensions: [smart]
 prose:
