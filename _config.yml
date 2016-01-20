@@ -7,9 +7,11 @@ columnist:
   paths:
   - _posts
 baseurl: 'http://hotosm.github.io/learnosm-staging'
-<!-- Main LearnOSM site this line reads 
+<!-- Main LearnOSM site & for Jekyll serve to run locally use
 baseurl: ''
-& this works with Jekyll serve -->
+.
+For staging site use
+baseurl: 'http://hotosm.github.io/learnosm-staging' -->
 rdiscount:
   extensions: [smart]
 prose:
