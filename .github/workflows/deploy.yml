@@ -4,7 +4,9 @@ name: Deploy staging site
 # hotosm/learnosm@transifex-sync. No cron on purpose: GitHub disables scheduled
 # workflows after 60 days of repo inactivity, and this repo rarely gets commits.
 on:
-  workflow_dispatch:
+  workflow_dispatch:      # manual: Actions -> Run workflow
+  repository_dispatch:    # nightly, from Windmill
+    types: [transifex-sync]
 
 permissions:
   contents: read
