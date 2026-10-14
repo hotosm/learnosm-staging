@@ -1,0 +1,76 @@
+name: Deploy staging site
+
+# Triggered by Windmill (f/shared/learnosm_transifex_sync) after each push to
+# hotosm/learnosm@transifex-sync. No cron on purpose: GitHub disables scheduled
+# workflows after 60 days of repo inactivity, and this repo rarely gets commits.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  SOURCE_REPO: hotosm/learnosm
+  SYNC_BRANCH: transifex-sync
+  BASE_BRANCH: gh-pages
+  STAGING_URL: https://staging.learnosm.org/  # trailing slash matches prod _config.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Choose source branch
+        id: src
+        run: |
+          if git ls-remote --exit-code --heads "https://github.com/${SOURCE_REPO}.git" "${SYNC_BRANCH}" >/dev/null; then
+            echo "ref=${SYNC_BRANCH}" >> "$GITHUB_OUTPUT"
+          else
+            # Nothing pending: staging == prod
+            echo "ref=${BASE_BRANCH}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v5
+        with:
+          repository: ${{ env.SOURCE_REPO }}
+          ref: ${{ steps.src.outputs.ref }}
+
+      - name: Apply staging overrides (build-time only, never committed)
+        env:
+          REF: ${{ steps.src.outputs.ref }}
+        run: |
+          # Prod CNAME is learnosm.org; the staging domain is set in this repo's Pages settings
+          rm -f CNAME
+          sed -i "s|^url: .*|url: \"${STAGING_URL}\"|" _config.yml
+          # Keep staging out of search engines and analytics
+          printf 'User-agent: *\nDisallow: /\n' > robots.txt
+          sed -i '/tracking-v3\.js/d' _layouts/default.html
+          # Visible banner on every page
+          banner="<div style=\"background:#d73f3f;color:#fff;text-align:center;padding:6px;font-weight:bold\">STAGING: translations pending review, not the live site. <a style=\"color:#fff;text-decoration:underline\" href=\"https://learnosm.org\">Go to learnosm.org</a></div>"
+          sed -i "0,/<body>/s|<body>|<body>\n${banner}|" _layouts/default.html
+          echo "Built from ${SOURCE_REPO}@${REF} ($(git rev-parse --short HEAD)) at $(date -u +%FT%TZ)" > staging-build.txt
+
+      - uses: actions/configure-pages@v5
+
+      # Same builder as classic GitHub Pages (github-pages gem), so the output matches prod.
+      - uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - uses: actions/upload-pages-artifact@v4
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
