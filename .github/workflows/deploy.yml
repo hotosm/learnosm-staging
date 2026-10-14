@@ -1,6 +1,6 @@
 name: Deploy staging site
 
-# Triggered by Windmill (f/shared/learnosm_transifex_sync) after each push to
+# Triggered daily by Windmill (f/shared/learnosm_transifex_sync) after it updates
 # hotosm/learnosm@transifex-sync. No cron on purpose: GitHub disables scheduled
 # workflows after 60 days of repo inactivity, and this repo rarely gets commits.
 on:
@@ -40,6 +40,26 @@ jobs:
           repository: ${{ env.SOURCE_REPO }}
           ref: ${{ steps.src.outputs.ref }}
 
+      # Branches named staging/* in SOURCE_REPO hold changes we want on staging but not
+      # (yet) on prod, e.g. enabling new languages. Each is applied as a diff against
+      # BASE_BRANCH at build time. Merge one into gh-pages to go live; delete it to drop it.
+      - name: Apply staging/* branches
+        run: |
+          git ls-remote --heads "https://github.com/${SOURCE_REPO}.git" 'refs/heads/staging/*' \
+            | sed 's|.*refs/heads/||' | while read -r branch; do
+            curl -fsSL "https://github.com/${SOURCE_REPO}/compare/${BASE_BRANCH}...${branch}.diff" -o staging.diff
+            if git apply --3way staging.diff; then
+              # Commit locally (never pushed) so a later failing branch can be reset without losing this one
+              git -c user.name=staging -c user.email=staging@localhost commit -q -m "${branch}"
+              echo "Applied ${branch}"
+              echo "${branch}" >> staging-branches.txt
+            else
+              echo "::warning::${branch} does not apply cleanly on top of the sync branch; skipped"
+              git reset -q --hard && git clean -fdq -e staging-branches.txt
+            fi
+            rm -f staging.diff
+          done
+
       - name: Apply staging overrides (build-time only, never committed)
         env:
           REF: ${{ steps.src.outputs.ref }}
@@ -53,7 +73,10 @@ jobs:
           # Visible banner on every page
           banner="<div style=\"background:#d73f3f;color:#fff;text-align:center;padding:6px;font-weight:bold\">STAGING: translations pending review, not the live site. <a style=\"color:#fff;text-decoration:underline\" href=\"https://learnosm.org\">Go to learnosm.org</a></div>"
           sed -i "0,/<body>/s|<body>|<body>\n${banner}|" _layouts/default.html
-          echo "Built from ${SOURCE_REPO}@${REF} ($(git rev-parse --short HEAD)) at $(date -u +%FT%TZ)" > staging-build.txt
+          {
+            echo "Built from ${SOURCE_REPO}@${REF} ($(git rev-parse --short HEAD)) at $(date -u +%FT%TZ)"
+            [ -f staging-branches.txt ] && sed 's/^/+ /' staging-branches.txt && rm staging-branches.txt
+          } > staging-build.txt
 
       - uses: actions/configure-pages@v5
 

@@ -21,6 +21,12 @@ GitHub Pages allows one site per repo.
 Fix translation problems **in Transifex**: the branch is rebuilt nightly, so edits made on it
 are lost. To hold a file back, add it to `.tx/hold.txt` in `hotosm/learnosm`.
 
+**Staging-only changes:** push a branch named `staging/<something>` (based on `gh-pages`) to
+`hotosm/learnosm`. Every `staging/*` branch is applied on top at build time, so it shows on
+staging but not on learnosm.org. To go live, merge it into `gh-pages`. To drop it, delete it.
+Keep these branches rebased on `gh-pages`. A branch that doesn't apply cleanly is skipped, with
+a warning in the Actions log. `/staging-build.txt` on the site lists what was applied.
+
 The build applies staging-only tweaks (no CNAME, `url` override, `robots.txt` disallow,
 no analytics, red banner). Nothing is committed back.
 
